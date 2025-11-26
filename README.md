@@ -122,84 +122,84 @@ This project is a comprehensive **AI-powered microservice** that predicts carbon
 
 ```
 carbon-ai-microservice/
-│
-├── data/                             # Data storage
-│   ├── raw/                          # Original, immutable data
-│   ├── processed/                    # Cleaned and transformed data
-│   └── external/                     # External datasets (weather, etc.)
-│
-├── notebooks/                        # Jupyter notebooks
-│   ├── 01_eda/                       # Exploratory Data Analysis
-│   ├── 02_preprocessing/             # Data cleaning and feature engineering
-│   ├── 03_modeling/                  # Model training and experimentation
-│   └── 04_evaluation/                # Model evaluation and comparison
-│
-├── models/                           # Trained models
-│   ├── ml/                           # Machine learning models
-│   ├── dl/                           # Deep learning models
-│   └── genai/                        # GenAI models and embeddings
-│
-├── src/                              # Source code
-│   ├── data_processing/              # ETL pipelines
-│   │   ├── __init__.py
-│   │   ├── data_loader.py
-│   │   ├── preprocessing.py
-│   │   └── feature_engineering.py
-│   │
-│   ├── ml_models/                    # ML model implementations
-│   │   ├── __init__.py
-│   │   ├── regression.py
-│   │   ├── classification.py
-│   │   ├── time_series.py
-│   │   └── clustering.py
-│   │
-│   ├── dl_models/                    # Deep learning models
-│   │   ├── __init__.py
-│   │   ├── lstm.py
-│   │   ├── cnn_vision.py
-│   │   └── transformer.py
-│   │
-│   ├── genai/                        # Generative AI components
-│   │   ├── __init__.py
-│   │   ├── rag_chatbot.py
-│   │   ├── llm_recommendations.py
-│   │   ├── report_generator.py
-│   │   └── voice_interface.py
-│   │
-│   └── api/                          # FastAPI application
-│       ├── __init__.py
-│       ├── main.py
-│       ├── routes/
-│       ├── schemas/
-│       └── dependencies.py
-│
-├── database/                         # Database files
-│   ├── schemas/                      # SQL schemas
-│   └── migrations/                   # Database migrations
-│
-├── tableau/                          # Tableau workbooks
-│   └── carbon_insights.twb
-│
-├── webapp/                           # Optional frontend
-│   └── (Streamlit or React app)
-│
-├── docker/                           # Docker configurations
-│   ├── Dockerfile
-│   └── docker-compose.yml
-│
-├── tests/                            # Unit and integration tests
-│   ├── test_data_processing.py
-│   ├── test_models.py
-│   └── test_api.py
-│
-├── presentation/                     # Final presentation materials
-│   ├── slides.pdf
-│   └── demo_screenshots/
-│
-├── .gitignore                        # Git ignore file
-├── requirements.txt                  # Python dependencies
-├── README.md                         # This file
-└── LICENSE                           # MIT License
+
+ data/                             # Data storage
+    raw/                          # Original, immutable data
+    processed/                    # Cleaned and transformed data
+    external/                     # External datasets (weather, etc.)
+
+ notebooks/                        # Jupyter notebooks
+    01_eda/                       # Exploratory Data Analysis
+    02_preprocessing/             # Data cleaning and feature engineering
+    03_modeling/                  # Model training and experimentation
+    04_evaluation/                # Model evaluation and comparison
+
+ models/                           # Trained models
+    ml/                           # Machine learning models
+    dl/                           # Deep learning models
+    genai/                        # GenAI models and embeddings
+
+ src/                              # Source code
+    data_processing/              # ETL pipelines
+       __init__.py
+       data_loader.py
+       preprocessing.py
+       feature_engineering.py
+   
+    ml_models/                    # ML model implementations
+       __init__.py
+       regression.py
+       classification.py
+       time_series.py
+       clustering.py
+   
+    dl_models/                    # Deep learning models
+       __init__.py
+       lstm.py
+       cnn_vision.py
+       transformer.py
+   
+    genai/                        # Generative AI components
+       __init__.py
+       rag_chatbot.py
+       llm_recommendations.py
+       report_generator.py
+       voice_interface.py
+   
+    api/                          # FastAPI application
+        __init__.py
+        main.py
+        routes/
+        schemas/
+        dependencies.py
+
+ database/                         # Database files
+    schemas/                      # SQL schemas
+    migrations/                   # Database migrations
+
+ tableau/                          # Tableau workbooks
+    carbon_insights.twb
+
+ webapp/                           # Optional frontend
+    (Streamlit or React app)
+
+ docker/                           # Docker configurations
+    Dockerfile
+    docker-compose.yml
+
+ tests/                            # Unit and integration tests
+    test_data_processing.py
+    test_models.py
+    test_api.py
+
+ presentation/                     # Final presentation materials
+    slides.pdf
+    demo_screenshots/
+
+ .gitignore                        # Git ignore file
+ requirements.txt                  # Python dependencies
+ README.md                         # This file
+ LICENSE                           # MIT License
 
 ```
 
@@ -417,13 +417,11 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-## Author
+## Contact
 
-**Your Name**  
-Data Science Bootcamp - Ironhack  
-📧 Email: your.email@example.com  
-🔗 LinkedIn: [Your Profile](https://linkedin.com/in/yourprofile)  
-💼 Portfolio: [Your Website](https://yourwebsite.com)
+- LinkedIn: [Natasha Silvestre](https://www.linkedin.com/in/natashasilvestre)
+- Email: [info@mycarbonai.com](mailto:info@mycarbonai.com)
+- Website: [mycarbonai.com](https://www.mycarbonai.com)
 
 ---
 
@@ -432,10 +430,6 @@ Data Science Bootcamp - Ironhack
 - Ironhack Data Science Bootcamp instructors and mentors
 - Open-source community for amazing tools and libraries
 - Dataset providers (Kaggle, UCI ML Repository)
-
----
-
-**If you find this project useful, please consider giving it a star!**
 
 ---
 
