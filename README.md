@@ -1,4 +1,4 @@
-# 🌍 Carbon Footprint AI Microservice
+# Carbon Footprint AI Microservice
 
 > **End-to-End Data Science & Machine Learning Project**  
 > Intelligent carbon emissions prediction and sustainability optimization system
@@ -9,7 +9,7 @@
 
 ---
 
-## 📋 Table of Contents
+## Table of Contents
 
 - [Project Overview](#-project-overview)
 - [Business Problem](#-business-problem)
@@ -27,22 +27,22 @@
 
 ---
 
-## 🎯 Project Overview
+## Project Overview
 
 This project is a comprehensive **AI-powered microservice** that predicts carbon emissions and provides intelligent sustainability recommendations for hotels and businesses. It combines **Machine Learning**, **Deep Learning**, and **Generative AI** to deliver actionable insights for reducing environmental impact.
 
 ### Key Objectives
 
-✅ Predict carbon emissions based on operational metrics  
-✅ Classify businesses by sustainability performance  
-✅ Forecast future emission trends using time-series analysis  
-✅ Provide AI-powered recommendations via RAG chatbot  
-✅ Analyze building efficiency through computer vision  
-✅ Generate automated sustainability reports  
+- Predict carbon emissions based on operational metrics  
+- Classify businesses by sustainability performance  
+- Forecast future emission trends using time-series analysis  
+- Provide AI-powered recommendations via RAG chatbot  
+- Analyze building efficiency through computer vision  
+- Generate automated sustainability reports  
 
 ---
 
-## 💼 Business Problem
+## Business Problem
 
 **Challenge**: Hotels and businesses struggle to accurately predict their carbon footprint and identify effective reduction strategies.
 
@@ -56,27 +56,27 @@ This project is a comprehensive **AI-powered microservice** that predicts carbon
 
 ---
 
-## ✨ Features
+## Features
 
-### 🤖 Machine Learning
+### Machine Learning
 - **Regression Models**: Predict carbon emissions (Random Forest, XGBoost, LightGBM)
 - **Classification**: Categorize sustainability levels (A-F rating)
 - **Time Series**: ARIMA, Prophet, and LSTM for emission forecasting
 - **Clustering**: K-Means for consumption pattern analysis
 
-### 🧠 Deep Learning
+### Deep Learning
 - **LSTM Networks**: Advanced time-series prediction
 - **CNN for Computer Vision**: Building efficiency analysis from images
 - **Transformer Models**: State-of-the-art forecasting
 - **Anomaly Detection**: Identify unusual consumption patterns
 
-### 💬 Generative AI
+### Generative AI
 - **RAG Chatbot**: LangChain-powered sustainability assistant
 - **LLM Recommendations**: GPT-4 powered personalized strategies
 - **Automated Reports**: Generate comprehensive sustainability reports
 - **Voice Interface**: Speech-to-text and text-to-speech capabilities
 
-### 📊 Data & Visualization
+### Data & Visualization
 - **Tableau Dashboard**: Interactive insights and KPIs
 - **SQL Database**: Structured data storage and queries
 - **RESTful API**: FastAPI endpoints for easy integration
@@ -84,7 +84,7 @@ This project is a comprehensive **AI-powered microservice** that predicts carbon
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 ### Core Technologies
 - **Python 3.9+**: Primary programming language
@@ -118,28 +118,28 @@ This project is a comprehensive **AI-powered microservice** that predicts carbon
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 carbon-ai-microservice/
 │
-├── 📊 data/                          # Data storage
+├── data/                             # Data storage
 │   ├── raw/                          # Original, immutable data
 │   ├── processed/                    # Cleaned and transformed data
 │   └── external/                     # External datasets (weather, etc.)
 │
-├── 📓 notebooks/                     # Jupyter notebooks
+├── notebooks/                        # Jupyter notebooks
 │   ├── 01_eda/                       # Exploratory Data Analysis
 │   ├── 02_preprocessing/             # Data cleaning and feature engineering
 │   ├── 03_modeling/                  # Model training and experimentation
 │   └── 04_evaluation/                # Model evaluation and comparison
 │
-├── 🤖 models/                        # Trained models
+├── models/                           # Trained models
 │   ├── ml/                           # Machine learning models
 │   ├── dl/                           # Deep learning models
 │   └── genai/                        # GenAI models and embeddings
 │
-├── 🔬 src/                           # Source code
+├── src/                              # Source code
 │   ├── data_processing/              # ETL pipelines
 │   │   ├── __init__.py
 │   │   ├── data_loader.py
@@ -173,39 +173,39 @@ carbon-ai-microservice/
 │       ├── schemas/
 │       └── dependencies.py
 │
-├── 🗄️ database/                      # Database files
+├── database/                         # Database files
 │   ├── schemas/                      # SQL schemas
 │   └── migrations/                   # Database migrations
 │
-├── 📊 tableau/                       # Tableau workbooks
+├── tableau/                          # Tableau workbooks
 │   └── carbon_insights.twb
 │
-├── 🎨 webapp/                        # Optional frontend
+├── webapp/                           # Optional frontend
 │   └── (Streamlit or React app)
 │
-├── 🐳 docker/                        # Docker configurations
+├── docker/                           # Docker configurations
 │   ├── Dockerfile
 │   └── docker-compose.yml
 │
-├── 📋 tests/                         # Unit and integration tests
+├── tests/                            # Unit and integration tests
 │   ├── test_data_processing.py
 │   ├── test_models.py
 │   └── test_api.py
 │
-├── 🎯 presentation/                  # Final presentation materials
+├── presentation/                     # Final presentation materials
 │   ├── slides.pdf
 │   └── demo_screenshots/
 │
-├── 📄 .gitignore                     # Git ignore file
-├── 📄 requirements.txt               # Python dependencies
-├── 📄 README.md                      # This file
-└── 📄 LICENSE                        # MIT License
+├── .gitignore                        # Git ignore file
+├── requirements.txt                  # Python dependencies
+├── README.md                         # This file
+└── LICENSE                           # MIT License
 
 ```
 
 ---
 
-## 🚀 Installation
+## Installation
 
 ### Prerequisites
 - Python 3.9 or higher
@@ -251,7 +251,7 @@ The API will be available at `http://localhost:8000`
 
 ---
 
-## 📖 Usage
+## Usage
 
 ### Running Jupyter Notebooks
 
@@ -291,7 +291,7 @@ curl -X POST "http://localhost:8000/api/v1/chat/sustainability" \
 
 ---
 
-## 📚 API Documentation
+## API Documentation
 
 Once the server is running, visit:
 - **Swagger UI**: http://localhost:8000/docs
@@ -310,7 +310,7 @@ Once the server is running, visit:
 
 ---
 
-## 🧪 Models & Methodology
+## Models & Methodology
 
 ### 1. Data Collection
 - **Energy consumption data**: Electricity, gas, water usage
@@ -351,7 +351,7 @@ Once the server is running, visit:
 
 ---
 
-## 📊 Results
+## Results
 
 > **Note**: Results will be updated after model training and evaluation.
 
@@ -371,33 +371,33 @@ Once the server is running, visit:
 
 ---
 
-## 🗺️ Roadmap
+## Roadmap
 
-### Phase 1: Foundation ✅
+### Phase 1: Foundation
 - [x] Project structure setup
 - [ ] Data collection and exploration
 - [ ] Initial EDA notebooks
 - [ ] Database schema design
 
-### Phase 2: Model Development 🔄
+### Phase 2: Model Development
 - [ ] Baseline ML models
 - [ ] Advanced ML models (XGBoost, LightGBM)
 - [ ] Deep learning models (LSTM, CNN)
 - [ ] Model evaluation and comparison
 
-### Phase 3: GenAI Integration 📅
+### Phase 3: GenAI Integration
 - [ ] RAG chatbot implementation
 - [ ] LLM-powered recommendations
 - [ ] Report generation system
 - [ ] Voice interface (optional)
 
-### Phase 4: API & Deployment 📅
+### Phase 4: API & Deployment
 - [ ] FastAPI implementation
 - [ ] API testing and documentation
 - [ ] Docker containerization
 - [ ] Cloud deployment (optional)
 
-### Phase 5: Visualization & Presentation 📅
+### Phase 5: Visualization & Presentation
 - [ ] Tableau dashboard creation
 - [ ] Streamlit web app (optional)
 - [ ] Final presentation preparation
@@ -405,19 +405,19 @@ Once the server is running, visit:
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
 This is an individual bootcamp project, but feedback and suggestions are welcome!
 
 ---
 
-## 📄 License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
 
-## 👤 Author
+## Author
 
 **Your Name**  
 Data Science Bootcamp - Ironhack  
@@ -427,7 +427,7 @@ Data Science Bootcamp - Ironhack
 
 ---
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - Ironhack Data Science Bootcamp instructors and mentors
 - Open-source community for amazing tools and libraries
@@ -435,7 +435,7 @@ Data Science Bootcamp - Ironhack
 
 ---
 
-**⭐ If you find this project useful, please consider giving it a star!**
+**If you find this project useful, please consider giving it a star!**
 
 ---
 
