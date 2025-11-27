@@ -11,6 +11,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 import uvicorn
 from datetime import datetime
+from src.api import tickets
 
 # Initialize FastAPI app
 app = FastAPI(
@@ -65,6 +66,8 @@ async def health_check():
 # ============================================================================
 # API v1 Endpoints
 # ============================================================================
+
+app.include_router(tickets.router)
 
 @app.post("/api/v1/predict/emissions")
 async def predict_emissions(
