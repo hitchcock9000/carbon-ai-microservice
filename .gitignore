@@ -70,6 +70,8 @@ data/raw/*.json
 data/raw/*.parquet
 data/processed/*.csv
 data/processed/*.pkl
+data/processed/*.parquet
+data/processed/*.npy
 data/external/*.csv
 *.h5
 *.hdf5
