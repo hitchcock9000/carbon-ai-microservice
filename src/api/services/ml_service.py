@@ -104,8 +104,27 @@ class MLService:
         cooling_degree_hours = max(0, air_temp - 18)
         heating_degree_hours = max(0, 18 - air_temp)
 
-        # Create feature dictionary matching training data
+        # Get additional features
+        building_id = data.get('building_id', 0)
+        meter = data.get('meter', 0)  # Default to electricity
+        site_id = data.get('site_id', 0)
+        wind_direction = data.get('wind_direction', 0.0)
+
+        # Derived features that require meter reading (use defaults)
+        meter_reading_per_sqft = 0.001  # Default estimate
+        log_meter_per_sqft = np.log1p(meter_reading_per_sqft)
+
+        # Lag and aggregate features (use defaults for single predictions)
+        meter_reading_lag1 = 0.0
+        hourly_avg_per_building = 100.0  # Default estimate
+        weekend_avg_per_building = 100.0  # Default estimate
+
+        # Create feature dictionary matching EXACT training data order
         features = {
+            'building_id': building_id,
+            'meter': meter,
+            'site_id': site_id,
+            'primary_use': primary_use,
             'square_feet': square_feet,
             'year_built': year_built,
             'floor_count': floor_count,
@@ -114,23 +133,24 @@ class MLService:
             'dew_temperature': dew_temp,
             'precip_depth_1_hr': precip,
             'sea_level_pressure': pressure,
+            'wind_direction': wind_direction,
             'wind_speed': wind_speed,
             'hour': hour,
             'day': day,
             'weekday': weekday,
             'month': month,
-            'primary_use': primary_use,
             'is_weekend': is_weekend,
             'log_square_feet': log_square_feet,
             'building_age': building_age,
+            'meter_reading_per_sqft': meter_reading_per_sqft,
+            'log_meter_per_sqft': log_meter_per_sqft,
             'sqft_per_floor': sqft_per_floor,
             'cooling_degree_hours': cooling_degree_hours,
-            'heating_degree_hours': heating_degree_hours
+            'heating_degree_hours': heating_degree_hours,
+            'meter_reading_lag1': meter_reading_lag1,
+            'hourly_avg_per_building': hourly_avg_per_building,
+            'weekend_avg_per_building': weekend_avg_per_building
         }
-
-        # Note: lag features and aggregates would require historical data
-        # For single predictions, we'll use defaults or omit them
-        # The model should still work reasonably well without these
 
         return pd.DataFrame([features])
 
