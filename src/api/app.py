@@ -12,7 +12,7 @@ import os
 from dotenv import load_dotenv
 
 # Import routers
-from .routes import predict_router
+from .routes import predict_router, chat_router
 
 # Load environment variables
 load_dotenv()
@@ -37,6 +37,7 @@ app.add_middleware(
 
 # Include routers
 app.include_router(predict_router)
+app.include_router(chat_router)
 
 # Health check endpoint
 @app.get("/health")
