@@ -210,11 +210,12 @@ wandb/
 # Personal helper files / walkthroughs (do not commit developer artifacts)
 # ============================================================================
 # Ignore walkthrough notebooks and personal helper notebooks
-walkthrough*.ipynb
-**/*walkthrough*.ipynb
-notebooks/*walkthrough*.ipynb
+*walkthrough*.ipynb
 
 # Ignore helper markdown files (but keep project docs like README.md)
 *helper*.md
-*_helper.md
+*TASK*.md
+MVP_*.md
+teacher_*.md
+SECURITY_*.md
 
