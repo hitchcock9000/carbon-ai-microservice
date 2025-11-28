@@ -40,6 +40,7 @@ venv.bak/
 .ipynb_checkpoints
 */.ipynb_checkpoints/*
 *.ipynb_checkpoints
+*_backup.ipynb
 
 # ============================================================================
 # Environment Variables
@@ -84,6 +85,9 @@ data/external/*.csv
 # ============================================================================
 # Model Files (exclude large trained models)
 # ============================================================================
+models/*.pkl
+models/*.txt
+models/*.json
 models/ml/*.pkl
 models/ml/*.joblib
 models/ml/*.h5
@@ -99,6 +103,9 @@ models/genai/*.safetensors
 !models/ml/.gitkeep
 !models/dl/.gitkeep
 !models/genai/.gitkeep
+
+# Keep model metadata for reference (small files)
+!models/model_info.json
 
 # ============================================================================
 # Database
