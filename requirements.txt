@@ -34,14 +34,11 @@ statsmodels
 pmdarima
 
 # Generative AI & LLMs
-# langchain
-# langchain-openai
-# langchain-community
-# openai
-# 
-# huggingface-hub
-# transformers
-# sentence-transformers
+langchain
+langchain-
+langchain-community
+
+sentence-transformers
 
 # Vector Databases & RAG
 chromadb
