@@ -85,3 +85,37 @@ jobs:
             else:
                 print(f'⚠ {d} does not exist (optional)')
         "
+
+    - name: Check models directory
+      run: |
+        # Verify models directory exists
+        python -c "
+        import os
+        models_dir = 'models'
+        if os.path.exists(models_dir):
+            print(f'✓ {models_dir} directory exists')
+            subdirs = ['ml', 'dl', 'genai']
+            for d in subdirs:
+                path = os.path.join(models_dir, d)
+                if os.path.exists(path):
+                    print(f'✓ {path} exists')
+                else:
+                    print(f'⚠ {path} does not exist (optional)')
+        else:
+            print(f'⚠ {models_dir} does not exist (optional)')
+        "
+
+    - name: Verify project structure
+      run: |
+        # Ensure key project files exist
+        python -c "
+        import os
+        required_files = ['README.md', 'requirements.txt', '.gitignore']
+        for f in required_files:
+            if os.path.exists(f):
+                print(f'✓ {f} exists')
+            else:
+                print(f'✗ {f} is missing!')
+                exit(1)
+        print('All required files present!')
+        "
