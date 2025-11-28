@@ -217,5 +217,14 @@ wandb/
 *TASK*.md
 MVP_*.md
 teacher_*.md
-SECURITY_*.md
+SECURITY*.md
+
+# Ignore temporary/debug scripts
+check_*.py
+convert_*.py
+debug_*.py
+setup_security.sh
+
+# Ignore PDF files (keep only in local)
+*.pdf
 
