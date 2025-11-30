@@ -176,8 +176,8 @@ class MLService:
         # Transform back to original scale
         energy_kwh = np.expm1(log_prediction)  # Inverse of log1p
 
-        # Ensure non-negative
-        energy_kwh = max(0, energy_kwh)
+        # Ensure non-negative and convert to native Python float
+        energy_kwh = float(max(0, energy_kwh))
 
         # Metadata
         metadata = {
@@ -239,8 +239,8 @@ class MLService:
         source_factors = emission_factors.get(energy_source.lower(), emission_factors["grid"])
         emission_factor = source_factors.get(region, source_factors.get("default", 0.385))
 
-        # Calculate emissions
-        carbon_kg = energy_kwh * emission_factor
+        # Calculate emissions and convert to native Python float
+        carbon_kg = float(energy_kwh * emission_factor)
 
         return carbon_kg, emission_factor
 
