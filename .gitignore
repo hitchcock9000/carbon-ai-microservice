@@ -235,3 +235,7 @@ setup_security.sh
 # Ignore PDF files (keep only in local)
 *.pdf
 
+
+# Node.js
+node_modules/
+package-lock.json
