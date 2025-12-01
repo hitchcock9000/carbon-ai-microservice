@@ -239,3 +239,7 @@ setup_security.sh
 # Node.js
 node_modules/
 package-lock.json
+
+# Project planning documents (local only)
+PROJECT_PLAN.md
+PRODUCT_REQUIREMENTS.md
