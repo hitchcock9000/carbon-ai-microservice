@@ -23,8 +23,8 @@ lightgbm
 catboost
 
 # Deep Learning
-# tensorflow
-# keras
+tensorflow>=2.15.0  # LSTM for time-series forecasting
+# keras  # Included with TensorFlow 2.x
 # torch
 # torchvision
 
