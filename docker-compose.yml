@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  api:
+    build: .
+    container_name: carbon-ai-api
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./models:/app/models
+      - ./src:/app/src
+    environment:
+      - ENVIRONMENT=production
+    restart: unless-stopped

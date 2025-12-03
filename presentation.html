@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carbon AI Microservice - Energy Forecasting with LSTM</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        .slides-container {
+            width: 100%;
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            padding: 40px;
+        }
+
+        .slide.active {
+            opacity: 1;
+        }
+
+        .slide-content {
+            background: white;
+            border-radius: 20px;
+            padding: 60px;
+            max-width: 1200px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: slideIn 0.6s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        h1 {
+            color: #667eea;
+            font-size: 3em;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        h2 {
+            color: #764ba2;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        h3 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            margin-top: 30px;
+        }
+
+        p, li {
+            font-size: 1.2em;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        .subtitle {
+            font-size: 1.5em;
+            color: #764ba2;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+        }
+
+        .card h4 {
+            color: #667eea;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .tech-badge {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .metric-box {
+            background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .metric-value {
+            font-size: 3em;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .metric-label {
+            font-size: 1.2em;
+            color: #555;
+        }
+
+        .navigation {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 1000;
+        }
+
+        .nav-button {
+            background: white;
+            color: #667eea;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 30px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .nav-button:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 7px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .slide-counter {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            background: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            color: #667eea;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
+            padding: 2px 8px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        ul li:before {
+            content: "✓ ";
+            color: #84fab0;
+            font-weight: bold;
+            font-size: 1.5em;
+            margin-right: 10px;
+        }
+
+        .architecture-diagram {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .flow-arrow {
+            font-size: 2em;
+            color: #667eea;
+            margin: 10px 0;
+        }
+
+        .code-block {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 1em;
+            overflow-x: auto;
+            margin-top: 20px;
+        }
+
+        .emoji {
+            font-size: 1.5em;
+            margin-right: 10px;
+        }
+
+        .team-section {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .team-member {
+            display: inline-block;
+            margin: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .slide-content {
+                padding: 30px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            h2 {
+                font-size: 1.8em;
+            }
+            
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-counter" id="slideCounter">1 / 10</div>
+    
+    <div class="slides-container">
+        <!-- Slide 1: Title -->
+        <div class="slide active">
+            <div class="slide-content">
+                <h1>🌍 Carbon AI Microservice</h1>
+                <p class="subtitle">LSTM-Powered Energy Consumption Forecasting</p>
+                <div class="tech-stack">
+                    <span class="tech-badge">Python 3.11</span>
+                    <span class="tech-badge">TensorFlow/Keras</span>
+                    <span class="tech-badge">FastAPI</span>
+                    <span class="tech-badge">LangChain</span>
+                    <span class="tech-badge">RAG System</span>
+                    <span class="tech-badge">LightGBM</span>
+                </div>
+                <div class="team-section">
+                    <h3>Presented by</h3>
+                    <div class="team-member">
+                        <p style="font-size: 1.5em; color: #667eea;">Natasha Silvestre</p>
+                        <p>Ironhack Data Analytics Bootcamp</p>
+                        <p>December 2025</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2: Problem Statement -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>🎯 Problem Statement</h2>
+                <div class="grid">
+                    <div class="card">
+                        <h4>🏢 Challenge</h4>
+                        <p>Buildings consume <span class="highlight">40%</span> of global energy</p>
+                        <p>Need accurate forecasting for:</p>
+                        <ul>
+                            <li>Energy optimization</li>
+                            <li>Cost reduction</li>
+                            <li>Carbon footprint reduction</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>💡 Solution</h4>
+                        <p>AI-powered microservice that combines:</p>
+                        <ul>
+                            <li>LSTM for temporal predictions</li>
+                            <li>Traditional ML (LightGBM/XGBoost)</li>
+                            <li>RAG chatbot for insights</li>
+                            <li>Real-time API predictions</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Dataset Overview -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>📊 Dataset Overview</h2>
+                <p class="subtitle">ASHRAE - Great Energy Predictor III</p>
+                <div class="grid">
+                    <div class="metric-box">
+                        <div class="metric-value">20M+</div>
+                        <div class="metric-label">Hourly Readings</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-value">1,449</div>
+                        <div class="metric-label">Buildings</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-value">16</div>
+                        <div class="metric-label">Site Locations</div>
+                    </div>
+                </div>
+                <h3>Key Features</h3>
+                <ul>
+                    <li>Temporal: Hour, day, weekday, month, weekend flags</li>
+                    <li>Weather: Air temperature, cloud coverage, precipitation</li>
+                    <li>Building: Square feet, age, floor count, primary use</li>
+                    <li>Engineered: Cooling/heating degree hours, lag features, building averages</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 4: Architecture -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>🏗️ System Architecture</h2>
+                <div class="architecture-diagram">
+                    <div class="card">
+                        <h4>📥 Data Pipeline</h4>
+                        <p>Raw Data → Preprocessing → Feature Engineering → Train/Val/Test Split</p>
+                    </div>
+                    <div class="flow-arrow">↓</div>
+                    <div class="card">
+                        <h4>🤖 ML Models</h4>
+                        <p>LightGBM (Baseline) + LSTM (Deep Learning) + Ensemble</p>
+                    </div>
+                    <div class="flow-arrow">↓</div>
+                    <div class="card">
+                        <h4>🚀 API Layer</h4>
+                        <p>FastAPI → Predictions + RAG Chatbot + Model Management</p>
+                    </div>
+                    <div class="flow-arrow">↓</div>
+                    <div class="card">
+                        <h4>💬 GenAI Interface</h4>
+                        <p>LangChain + OpenAI → Conversational Energy Insights</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: LSTM Model -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>🧠 LSTM Deep Learning Model</h2>
+                <p class="subtitle">Professor's Suggestion: Temporal Forecasting with Recurrent Networks</p>
+                <h3>Architecture</h3>
+                <ul>
+                    <li><strong>Input:</strong> 24-hour lookback windows (sequences)</li>
+                    <li><strong>Layer 1:</strong> LSTM (128 units) + Dropout (0.2)</li>
+                    <li><strong>Layer 2:</strong> LSTM (64 units) + Dropout (0.2)</li>
+                    <li><strong>Layer 3:</strong> Dense (32 units, ReLU)</li>
+                    <li><strong>Output:</strong> Dense (1 unit) - next hour prediction</li>
+                </ul>
+                <h3>Training Strategy</h3>
+                <ul>
+                    <li>Optimizer: Adam (lr=0.0001, gradient clipping)</li>
+                    <li>Loss: MSE on log-transformed values</li>
+                    <li>Callbacks: Early Stopping, ModelCheckpoint, ReduceLROnPlateau</li>
+                    <li>Batch Size: 256 | Max Epochs: 50</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 6: Data Preprocessing -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>🔧 Data Preprocessing Pipeline</h2>
+                <div class="grid">
+                    <div class="card">
+                        <h4>1. Cleaning</h4>
+                        <ul>
+                            <li>Remove anomalies (meter_reading = 0)</li>
+                            <li>Handle missing weather data</li>
+                            <li>Interpolate temperature gaps</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>2. Feature Engineering</h4>
+                        <ul>
+                            <li>Log transformation (target)</li>
+                            <li>Temporal features extraction</li>
+                            <li>Degree hours calculation</li>
+                            <li>Building aggregations</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>3. Scaling</h4>
+                        <ul>
+                            <li>MinMaxScaler for LSTM</li>
+                            <li>Separate scalers for X and y</li>
+                            <li>Preserve test distribution</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>4. Sequence Creation</h4>
+                        <ul>
+                            <li>Sliding windows (24 hours)</li>
+                            <li>Shape: (samples, 24, features)</li>
+                            <li>Maintains temporal order</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: Model Comparison -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>📈 Model Comparison</h2>
+                <table style="width: 100%; border-collapse: collapse; margin-top: 30px;">
+                    <thead>
+                        <tr style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+                            <th style="padding: 20px; font-size: 1.3em;">Model</th>
+                            <th style="padding: 20px; font-size: 1.3em;">RMSE</th>
+                            <th style="padding: 20px; font-size: 1.3em;">MAE</th>
+                            <th style="padding: 20px; font-size: 1.3em;">MAPE</th>
+                            <th style="padding: 20px; font-size: 1.3em;">Strengths</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="background: #f8f9fa;">
+                            <td style="padding: 20px; font-weight: bold;">LightGBM</td>
+                            <td style="padding: 20px;">227.37</td>
+                            <td style="padding: 20px;">78.97</td>
+                            <td style="padding: 20px;">37.94%</td>
+                            <td style="padding: 20px;">Fast, interpretable, robust</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 20px; font-weight: bold;">LSTM</td>
+                            <td style="padding: 20px; color: #667eea; font-weight: bold;">TBD</td>
+                            <td style="padding: 20px; color: #667eea; font-weight: bold;">TBD</td>
+                            <td style="padding: 20px; color: #667eea; font-weight: bold;">TBD</td>
+                            <td style="padding: 20px;">Temporal patterns, sequences</td>
+                        </tr>
+                        <tr style="background: #f8f9fa;">
+                            <td style="padding: 20px; font-weight: bold;">XGBoost</td>
+                            <td style="padding: 20px;">~235</td>
+                            <td style="padding: 20px;">~82</td>
+                            <td style="padding: 20px;">~39%</td>
+                            <td style="padding: 20px;">Handles outliers well</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p style="margin-top: 30px; text-align: center; font-size: 1.1em;">
+                    <strong>LSTM is currently training...</strong> Expected to capture long-term temporal dependencies better than tree-based models.
+                </p>
+            </div>
+        </div>
+
+        <!-- Slide 8: GenAI & RAG -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>💬 GenAI Chatbot with RAG</h2>
+                <p class="subtitle">Conversational Interface for Energy Insights</p>
+                <div class="grid">
+                    <div class="card">
+                        <h4>🧩 Components</h4>
+                        <ul>
+                            <li>LangChain framework</li>
+                            <li>OpenAI GPT-4</li>
+                            <li>FAISS vector store</li>
+                            <li>Sentence transformers</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>📚 Knowledge Base</h4>
+                        <ul>
+                            <li>Building metadata</li>
+                            <li>Weather patterns</li>
+                            <li>Historical predictions</li>
+                            <li>Model documentation</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="code-block" style="margin-top: 30px;">
+POST /api/chat
+{
+  "message": "What's the average energy consumption for office buildings?",
+  "building_id": 123
+}
+
+Response:
+{
+  "response": "Office buildings average 145 kWh/hour during peak times...",
+  "sources": ["building_metadata.csv", "historical_predictions"]
+}</div>
+            </div>
+        </div>
+
+        <!-- Slide 9: API Endpoints -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>🚀 FastAPI Endpoints</h2>
+                <div class="grid" style="grid-template-columns: 1fr;">
+                    <div class="card">
+                        <h4>POST /predict</h4>
+                        <p>Single prediction for building energy consumption</p>
+                        <div class="code-block">
+{
+  "building_id": 123,
+  "timestamp": "2025-12-01T14:00:00",
+  "air_temperature": 22.5,
+  "square_feet": 5000
+}</div>
+                    </div>
+                    <div class="card">
+                        <h4>POST /predict/batch</h4>
+                        <p>Batch predictions for multiple buildings</p>
+                    </div>
+                    <div class="card">
+                        <h4>POST /chat</h4>
+                        <p>RAG-powered chatbot for insights and recommendations</p>
+                    </div>
+                    <div class="card">
+                        <h4>GET /models/info</h4>
+                        <p>Model metadata, performance metrics, version info</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 10: Next Steps & Conclusion -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>🎯 Next Steps & Conclusion</h2>
+                <div class="grid">
+                    <div class="card">
+                        <h4>🚀 Immediate</h4>
+                        <ul>
+                            <li>Complete LSTM training</li>
+                            <li>Evaluate model performance</li>
+                            <li>Compare with LightGBM</li>
+                            <li>Deploy to production</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>🔮 Future Enhancements</h4>
+                        <ul>
+                            <li>Attention mechanisms</li>
+                            <li>Transformer models</li>
+                            <li>Ensemble LSTM + LightGBM</li>
+                            <li>Real-time streaming data</li>
+                            <li>Mobile app interface</li>
+                        </ul>
+                    </div>
+                </div>
+                <h3 style="text-align: center; margin-top: 40px;">Key Achievements</h3>
+                <div class="tech-stack">
+                    <span class="tech-badge">✅ Full ML Pipeline</span>
+                    <span class="tech-badge">✅ LSTM Implementation</span>
+                    <span class="tech-badge">✅ REST API</span>
+                    <span class="tech-badge">✅ RAG Chatbot</span>
+                    <span class="tech-badge">✅ Production Ready</span>
+                </div>
+                <div class="team-section">
+                    <h3>Thank You!</h3>
+                    <p style="font-size: 1.3em; color: #667eea; margin-top: 20px;">
+                        Questions?
+                    </p>
+                    <p style="margin-top: 20px;">
+                        📧 Contact: Natasha Silvestre<br>
+                        🔗 GitHub: hitchcock9000/carbon-ai-microservice
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="navigation">
+        <button class="nav-button" id="prevBtn" onclick="changeSlide(-1)">← Previous</button>
+        <button class="nav-button" id="nextBtn" onclick="changeSlide(1)">Next →</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + totalSlides) % totalSlides;
+            slides[currentSlide].classList.add('active');
+            
+            // Update counter
+            document.getElementById('slideCounter').textContent = `${currentSlide + 1} / ${totalSlides}`;
+            
+            // Update button states
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+        }
+
+        function changeSlide(direction) {
+            showSlide(currentSlide + direction);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'ArrowLeft') {
+                changeSlide(-1);
+            } else if (event.key === 'ArrowRight' || event.key === ' ') {
+                changeSlide(1);
+            }
+        });
+
+        // Initialize
+        showSlide(0);
+    </script>
+</body>
+</html>

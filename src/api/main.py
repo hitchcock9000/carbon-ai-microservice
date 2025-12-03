@@ -12,6 +12,7 @@ from fastapi.responses import JSONResponse
 import uvicorn
 from datetime import datetime
 from src.api import tickets
+from src.api.endpoints import forecast
 
 # Initialize FastAPI app
 app = FastAPI(
@@ -68,6 +69,7 @@ async def health_check():
 # ============================================================================
 
 app.include_router(tickets.router)
+app.include_router(forecast.router, prefix="/api", tags=["forecast"])
 
 @app.post("/api/v1/predict/emissions")
 async def predict_emissions(

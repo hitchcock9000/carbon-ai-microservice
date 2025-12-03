@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../../mycarbonai-dashboard"
+		}
+	],
+	"settings": {
+		"claudeCode.useTerminal": true
+	}
+}
