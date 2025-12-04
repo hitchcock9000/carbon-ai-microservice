@@ -13,7 +13,7 @@ import uvicorn
 from datetime import datetime
 from src.api import tickets
 from src.api.endpoints import forecast
-from src.api.endpoints import future_forecast
+from src.api.endpoints import future_forecast  # Now has LightGBM fallback
 from src.api.endpoints import insights
 from src.api.static_files import router as static_router
 
@@ -78,7 +78,7 @@ async def health_check():
 app.include_router(static_router)  # Dashboard frontend
 app.include_router(tickets.router)
 app.include_router(forecast.router, prefix="/api", tags=["forecast"])
-app.include_router(future_forecast.router, prefix="/api", tags=["future-forecast"])
+app.include_router(future_forecast.router, prefix="/api", tags=["future-forecast"])  # Now with fallback
 app.include_router(insights.router, prefix="/api/insights", tags=["insights"])
 
 @app.post("/api/v1/predict/emissions")
