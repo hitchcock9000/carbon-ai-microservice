@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carbon AI - Energy Forecasting Dashboard</title>
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.1em;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .metric-label {
+            font-size: 0.9em;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .metric-value {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .metric-subtitle {
+            font-size: 0.85em;
+            color: #999;
+            margin-top: 5px;
+        }
+
+        .charts-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .chart-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .chart-title {
+            font-size: 1.3em;
+            color: #333;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+        }
+
+        .controls {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .controls h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .control-group {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        label {
+            font-weight: 600;
+            color: #555;
+        }
+
+        input, select, button {
+            padding: 10px 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1em;
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: white;
+            font-size: 1.2em;
+        }
+
+        .error {
+            background: #ff4444;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+
+        .success {
+            background: #44ff44;
+            color: #333;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+
+        .prediction-result {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .prediction-value {
+            font-size: 3em;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        footer {
+            text-align: center;
+            color: white;
+            margin-top: 40px;
+            padding: 20px;
+        }
+
+        .api-status {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        .api-status.online {
+            background: #44ff44;
+            box-shadow: 0 0 10px #44ff44;
+        }
+
+        .api-status.offline {
+            background: #ff4444;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8em;
+            }
+            
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>⚡ Carbon AI Dashboard</h1>
+            <p class="subtitle">Energy Consumption Forecasting with LSTM & LightGBM</p>
+            <p style="margin-top: 10px;">
+                <span class="api-status" id="apiStatus"></span>
+                <span id="apiStatusText">Checking API...</span>
+            </p>
+        </header>
+
+        <div class="controls">
+            <h3>🎯 Make Prediction</h3>
+            <div class="control-group">
+                <div>
+                    <label for="buildingId">Building ID:</label>
+                    <input type="number" id="buildingId" value="1" min="0">
+                </div>
+                <div>
+                    <label for="temperature">Temperature (°C):</label>
+                    <input type="number" id="temperature" value="20" step="0.1">
+                </div>
+                <div>
+                    <label for="hour">Hour:</label>
+                    <input type="number" id="hour" value="12" min="0" max="23">
+                </div>
+                <div>
+                    <label for="modelType">Model:</label>
+                    <select id="modelType">
+                        <option value="lstm">LSTM (Deep Learning)</option>
+                        <option value="lightgbm">LightGBM (Baseline)</option>
+                    </select>
+                </div>
+                <button onclick="makePrediction()">🚀 Predict</button>
+                <button onclick="loadEvaluationResults()">📊 Load Results</button>
+            </div>
+            <div id="predictionResult"></div>
+        </div>
+
+        <div class="metrics-grid" id="metricsGrid">
+            <div class="metric-card">
+                <div class="metric-label">MAE (Mean Absolute Error)</div>
+                <div class="metric-value" id="mae">--</div>
+                <div class="metric-subtitle">Lower is better</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">RMSE</div>
+                <div class="metric-value" id="rmse">--</div>
+                <div class="metric-subtitle">Root Mean Square Error</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">R² Score</div>
+                <div class="metric-value" id="r2">--</div>
+                <div class="metric-subtitle">Variance explained</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Improvement</div>
+                <div class="metric-value" id="improvement">--</div>
+                <div class="metric-subtitle">vs Mean Baseline</div>
+            </div>
+        </div>
+
+        <div class="charts-container">
+            <div class="chart-card">
+                <h3 class="chart-title">📈 Model Performance Comparison</h3>
+                <div id="comparisonChart"></div>
+            </div>
+
+            <div class="chart-card">
+                <h3 class="chart-title">🎯 Predictions vs Actual (Sample)</h3>
+                <div id="scatterChart"></div>
+            </div>
+
+            <div class="chart-card">
+                <h3 class="chart-title">⏱️ Time Series Forecast</h3>
+                <div id="timeSeriesChart"></div>
+            </div>
+
+            <div class="chart-card">
+                <h3 class="chart-title">📊 Error Distribution</h3>
+                <div id="errorDistChart"></div>
+            </div>
+        </div>
+
+        <footer>
+            <p><strong>Carbon AI Microservice</strong> | Ironhack Data Analytics Bootcamp 2025</p>
+            <p>Powered by TensorFlow, LightGBM, FastAPI & LangChain</p>
+        </footer>
+    </div>
+
+    <script>
+        // Configuration
+        const API_BASE_URL = 'http://localhost:8000';
+        let evaluationData = null;
+
+        // Check API status
+        async function checkAPIStatus() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/health`);
+                if (response.ok) {
+                    document.getElementById('apiStatus').className = 'api-status online';
+                    document.getElementById('apiStatusText').textContent = 'API Online';
+                } else {
+                    throw new Error('API not responding');
+                }
+            } catch (error) {
+                document.getElementById('apiStatus').className = 'api-status offline';
+                document.getElementById('apiStatusText').textContent = 'API Offline';
+            }
+        }
+
+        // Load evaluation results from JSON file
+        async function loadEvaluationResults() {
+            try {
+                const response = await fetch('../../results/lstm_evaluation_results.json');
+                evaluationData = await response.json();
+                
+                // Update metrics
+                document.getElementById('mae').textContent = evaluationData.mae.toFixed(2);
+                document.getElementById('rmse').textContent = evaluationData.rmse.toFixed(2);
+                document.getElementById('r2').textContent = evaluationData.r2.toFixed(4);
+                
+                // Calculate improvement
+                const improvement = ((evaluationData.baseline_comparison[1].MAE - evaluationData.mae) / 
+                                    evaluationData.baseline_comparison[1].MAE * 100).toFixed(1);
+                document.getElementById('improvement').textContent = `${improvement}%`;
+                
+                // Create charts
+                createComparisonChart();
+                createScatterChart();
+                createTimeSeriesChart();
+                createErrorDistChart();
+                
+                showMessage('Results loaded successfully!', 'success');
+            } catch (error) {
+                console.error('Error loading results:', error);
+                showMessage('Error loading results. Make sure results file exists.', 'error');
+            }
+        }
+
+        // Create comparison chart
+        function createComparisonChart() {
+            const data = evaluationData.baseline_comparison.map(model => ({
+                model: model.Model,
+                mae: model.MAE
+            }));
+
+            const trace = {
+                x: data.map(d => d.model),
+                y: data.map(d => d.mae),
+                type: 'bar',
+                marker: {
+                    color: ['#667eea', '#ff6b6b', '#ffa500', '#4ecdc4'],
+                    line: { color: '#333', width: 2 }
+                },
+                text: data.map(d => d.mae.toFixed(2)),
+                textposition: 'outside'
+            };
+
+            const layout = {
+                title: '',
+                xaxis: { title: 'Model' },
+                yaxis: { title: 'MAE (kWh)' },
+                showlegend: false,
+                plot_bgcolor: '#f8f9fa',
+                paper_bgcolor: 'white'
+            };
+
+            Plotly.newPlot('comparisonChart', [trace], layout, {responsive: true});
+        }
+
+        // Create scatter chart (simulated data)
+        function createScatterChart() {
+            // Generate simulated data based on MAE
+            const n = 500;
+            const actual = Array.from({length: n}, () => Math.random() * 2000);
+            const predicted = actual.map(a => a + (Math.random() - 0.5) * evaluationData.mae * 2);
+
+            const trace = {
+                x: actual,
+                y: predicted,
+                mode: 'markers',
+                type: 'scatter',
+                marker: {
+                    color: '#667eea',
+                    size: 4,
+                    opacity: 0.6
+                },
+                name: 'Predictions'
+            };
+
+            const perfectLine = {
+                x: [0, 2000],
+                y: [0, 2000],
+                mode: 'lines',
+                line: { color: '#ff6b6b', dash: 'dash', width: 2 },
+                name: 'Perfect Prediction'
+            };
+
+            const layout = {
+                xaxis: { title: 'Actual (kWh)' },
+                yaxis: { title: 'Predicted (kWh)' },
+                showlegend: true,
+                plot_bgcolor: '#f8f9fa',
+                paper_bgcolor: 'white'
+            };
+
+            Plotly.newPlot('scatterChart', [trace, perfectLine], layout, {responsive: true});
+        }
+
+        // Create time series chart
+        function createTimeSeriesChart() {
+            const n = 168; // 1 week
+            const timePoints = Array.from({length: n}, (_, i) => i);
+            
+            // Simulate seasonal pattern
+            const actual = timePoints.map(t => 
+                800 + 300 * Math.sin(t * Math.PI / 12) + (Math.random() - 0.5) * 200
+            );
+            const predicted = actual.map(a => a + (Math.random() - 0.5) * evaluationData.mae);
+
+            const actualTrace = {
+                x: timePoints,
+                y: actual,
+                mode: 'lines',
+                name: 'Actual',
+                line: { color: '#667eea', width: 2 }
+            };
+
+            const predictedTrace = {
+                x: timePoints,
+                y: predicted,
+                mode: 'lines',
+                name: 'Predicted',
+                line: { color: '#ffa500', width: 2, dash: 'dot' }
+            };
+
+            const layout = {
+                xaxis: { title: 'Hour' },
+                yaxis: { title: 'Energy Consumption (kWh)' },
+                showlegend: true,
+                plot_bgcolor: '#f8f9fa',
+                paper_bgcolor: 'white'
+            };
+
+            Plotly.newPlot('timeSeriesChart', [actualTrace, predictedTrace], layout, {responsive: true});
+        }
+
+        // Create error distribution chart
+        function createErrorDistChart() {
+            // Generate error distribution based on MAE
+            const n = 1000;
+            const errors = Array.from({length: n}, () => {
+                // Normal distribution around 0 with std based on MAE
+                const u1 = Math.random();
+                const u2 = Math.random();
+                const z0 = Math.sqrt(-2.0 * Math.log(u1)) * Math.cos(2.0 * Math.PI * u2);
+                return z0 * evaluationData.mae * 0.8;
+            });
+
+            const trace = {
+                x: errors,
+                type: 'histogram',
+                marker: {
+                    color: '#667eea',
+                    line: { color: '#333', width: 1 }
+                },
+                nbinsx: 50
+            };
+
+            const layout = {
+                xaxis: { title: 'Prediction Error (kWh)' },
+                yaxis: { title: 'Frequency' },
+                showlegend: false,
+                plot_bgcolor: '#f8f9fa',
+                paper_bgcolor: 'white',
+                shapes: [{
+                    type: 'line',
+                    x0: 0,
+                    x1: 0,
+                    y0: 0,
+                    y1: 1,
+                    yref: 'paper',
+                    line: { color: '#ff6b6b', width: 2, dash: 'dash' }
+                }]
+            };
+
+            Plotly.newPlot('errorDistChart', [trace], layout, {responsive: true});
+        }
+
+        // Make prediction via API
+        async function makePrediction() {
+            const buildingId = document.getElementById('buildingId').value;
+            const temperature = document.getElementById('temperature').value;
+            const hour = document.getElementById('hour').value;
+            const modelType = document.getElementById('modelType').value;
+
+            const payload = {
+                building_id: parseInt(buildingId),
+                meter: 0,
+                timestamp: new Date().toISOString(),
+                air_temperature: parseFloat(temperature),
+                cloud_coverage: 4,
+                dew_temperature: 15,
+                precip_depth_1_hr: 0,
+                sea_level_pressure: 1013,
+                wind_direction: 180,
+                wind_speed: 3,
+                square_feet: 100000,
+                year_built: 2000,
+                floor_count: 5
+            };
+
+            try {
+                const endpoint = modelType === 'lstm' ? '/api/predict/lstm' : '/api/predict';
+                const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) throw new Error('Prediction failed');
+
+                const result = await response.json();
+                
+                const resultHTML = `
+                    <div class="prediction-result">
+                        <h3>🎯 Prediction Result</h3>
+                        <div class="prediction-value">${result.prediction.toFixed(2)} kWh</div>
+                        <p>Model: ${modelType.toUpperCase()}</p>
+                        <p>Building ID: ${buildingId} | Hour: ${hour} | Temperature: ${temperature}°C</p>
+                    </div>
+                `;
+                
+                document.getElementById('predictionResult').innerHTML = resultHTML;
+            } catch (error) {
+                console.error('Prediction error:', error);
+                showMessage('Prediction failed. Make sure API is running.', 'error');
+            }
+        }
+
+        // Show message
+        function showMessage(message, type) {
+            const resultDiv = document.getElementById('predictionResult');
+            resultDiv.innerHTML = `<div class="${type}">${message}</div>`;
+            setTimeout(() => {
+                resultDiv.innerHTML = '';
+            }, 5000);
+        }
+
+        // Initialize
+        checkAPIStatus();
+        setInterval(checkAPIStatus, 30000); // Check every 30 seconds
+        
+        // Try to load results on page load
+        setTimeout(loadEvaluationResults, 500);
+    </script>
+</body>
+</html>

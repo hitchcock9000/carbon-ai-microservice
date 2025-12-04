@@ -13,6 +13,7 @@ from dotenv import load_dotenv
 
 # Import routers
 from .routes import predict_router, chat_router
+from .static_files import router as static_router
 
 # Load environment variables
 load_dotenv()
@@ -36,6 +37,7 @@ app.add_middleware(
 )
 
 # Include routers
+app.include_router(static_router)  # Frontend dashboard
 app.include_router(predict_router)
 app.include_router(chat_router)
 

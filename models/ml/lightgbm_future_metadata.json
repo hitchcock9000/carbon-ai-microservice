@@ -1,0 +1,25 @@
+{
+  "features": [
+    "hour",
+    "day",
+    "weekday",
+    "month",
+    "is_weekend",
+    "log_square_feet",
+    "building_age",
+    "floor_count",
+    "air_temperature",
+    "dew_temperature",
+    "wind_speed",
+    "sea_level_pressure",
+    "cooling_degree_hours",
+    "heating_degree_hours"
+  ],
+  "target": "meter_reading",
+  "mae": 656.1819920740255,
+  "rmse": 63555.267341744795,
+  "r2": 0.0001654805638426904,
+  "train_samples": 14074452,
+  "test_samples": 3025569,
+  "note": "Model trained without lag features for future predictions"
+}
