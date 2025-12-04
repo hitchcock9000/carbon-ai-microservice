@@ -11,7 +11,7 @@ python-dotenv==1.0.0
 
 # Data Processing & Analysis
 pandas
-numpy
+numpy<2.0  # TensorFlow 2.16 requires NumPy <2.0
 scipy
 openpyxl==3.1.2
 pyarrow  # Required for Parquet file support

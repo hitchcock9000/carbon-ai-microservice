@@ -243,3 +243,8 @@ package-lock.json
 # Project planning documents (local only)
 PROJECT_PLAN.md
 PRODUCT_REQUIREMENTS.md
+
+# Presentation materials (local only)
+PRESENTATION_NOTES.md
+*_NOTES.md
+presentation_script*.md
