@@ -15,11 +15,12 @@ router = APIRouter()
 client = None
 try:
     api_key = os.getenv("OPENAI_API_KEY")
-    if api_key:
+    # Check if API key is valid (not a placeholder)
+    if api_key and api_key.startswith("sk-") and "your_" not in api_key and "placeholder" not in api_key.lower():
         client = OpenAI(api_key=api_key)
         print("✓ OpenAI client initialized for insights")
     else:
-        print("⚠️  OPENAI_API_KEY not found. AI insights will use rule-based analysis only.")
+        print("⚠️  Valid OPENAI_API_KEY not found. AI insights will use rule-based analysis only.")
 except Exception as e:
     print(f"⚠️  Failed to initialize OpenAI: {e}")
 
