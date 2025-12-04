@@ -1,0 +1,39 @@
+{
+  "mae": 683.4272547193543,
+  "rmse": 51422.56968747832,
+  "r2": -0.00012859751922578155,
+  "mae_percentage": 94.0724240941587,
+  "mape_filtered": 87.38026581167284,
+  "smape": 119.76124025286406,
+  "wape": 100.83585610118118,
+  "mae_log": 1.796143957983396,
+  "rmse_log": 2.2637365486196535,
+  "consumption_mean": 726.4905324809109,
+  "consumption_median": 78.2592,
+  "baseline_comparison": [
+    {
+      "Model": "LSTM (Ours)",
+      "MAE": 683.4272547193543,
+      "RMSE": 51422.56968747832,
+      "Improvement vs Mean": "22.0%"
+    },
+    {
+      "Model": "Mean Baseline",
+      "MAE": 876.7493604418412,
+      "RMSE": 2755.463359960966,
+      "Improvement vs Mean": "0.0%"
+    },
+    {
+      "Model": "Median Baseline",
+      "MAE": 523.4935837617882,
+      "RMSE": 2787.5094020361967,
+      "Improvement vs Mean": "40.3%"
+    },
+    {
+      "Model": "Persistence",
+      "MAE": 1149.662913346126,
+      "RMSE": 72718.27496987193,
+      "Improvement vs Mean": "-31.1%"
+    }
+  ]
+}

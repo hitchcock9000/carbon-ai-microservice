@@ -12,6 +12,10 @@ from fastapi.responses import JSONResponse
 import uvicorn
 from datetime import datetime
 from src.api import tickets
+from src.api.endpoints import forecast
+from src.api.endpoints import future_forecast
+from src.api.endpoints import insights
+from src.api.static_files import router as static_router
 
 # Initialize FastAPI app
 app = FastAPI(
@@ -47,9 +51,13 @@ async def root():
         "docs": "/docs",
         "endpoints": {
             "predictions": "/api/v1/predict",
+            "forecast_lstm": "/api/forecast",
+            "forecast_future": "/api/forecast/future",
+            "scenario_analysis": "/api/forecast/scenario",
             "recommendations": "/api/v1/recommendations",
-            "chat": "/api/v1/chat",
-            "insights": "/api/v1/insights"
+            "insights_analyze": "/api/insights/analyze",
+            "insights_health": "/api/insights/health",
+            "chat": "/api/v1/chat"
         }
     }
 
@@ -67,7 +75,11 @@ async def health_check():
 # API v1 Endpoints
 # ============================================================================
 
+app.include_router(static_router)  # Dashboard frontend
 app.include_router(tickets.router)
+app.include_router(forecast.router, prefix="/api", tags=["forecast"])
+app.include_router(future_forecast.router, prefix="/api", tags=["future-forecast"])
+app.include_router(insights.router, prefix="/api/insights", tags=["insights"])
 
 @app.post("/api/v1/predict/emissions")
 async def predict_emissions(

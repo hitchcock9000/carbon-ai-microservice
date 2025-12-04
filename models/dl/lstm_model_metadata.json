@@ -1,0 +1,31 @@
+{
+  "timesteps": 24,
+  "features": [
+    "hour",
+    "day",
+    "weekday",
+    "month",
+    "is_weekend",
+    "log_square_feet",
+    "building_age",
+    "floor_count",
+    "air_temperature",
+    "meter_reading_per_sqft",
+    "cooling_degree_hours",
+    "heating_degree_hours",
+    "meter_reading_lag1",
+    "hourly_avg_per_building",
+    "weekend_avg_per_building"
+  ],
+  "n_features": 15,
+  "rmse": 6114.302586914796,
+  "mae": 2995.5448340927733,
+  "mape": 5930.17391062936,
+  "model_architecture": "Bidirectional LSTM + Attention (128, 64 units)",
+  "framework": "TensorFlow/Keras 2.16.2",
+  "training_samples": 976,
+  "validation_samples": 176,
+  "test_samples": 176,
+  "trained_on": "Google Colab",
+  "date": "2025-12-03"
+}

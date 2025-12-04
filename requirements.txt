@@ -23,10 +23,17 @@ lightgbm
 catboost
 
 # Deep Learning
-# tensorflow
-# keras
+tensorflow>=2.15.0  # LSTM for time-series forecasting
+# keras  # Included with TensorFlow 2.x
 # torch
 # torchvision
+
+# GPU Acceleration (Optional - install based on your hardware)
+# For Mac with M1/M2/M3 (Apple Silicon):
+#   tensorflow-metal  # Enables GPU acceleration on Apple Silicon
+# For NVIDIA GPUs:
+#   Install CUDA Toolkit and cuDNN first, then:
+#   tensorflow[and-cuda]  # Includes CUDA/cuDNN support
 
 # Time Series Forecasting
 prophet
@@ -34,14 +41,10 @@ statsmodels
 pmdarima
 
 # Generative AI & LLMs
-# langchain
-# langchain-openai
-# langchain-community
-# openai
-# anthropic
-# huggingface-hub
-# transformers
-# sentence-transformers
+langchain
+langchain-openai
+langchain-community
+sentence-transformers
 
 # Vector Databases & RAG
 chromadb

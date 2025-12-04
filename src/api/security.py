@@ -116,7 +116,7 @@ class SecretValidator:
     ]
     
     OPTIONAL_SECRETS = [
-        "ANTHROPIC_API_KEY",
+        "",
         "HUGGINGFACE_API_KEY",
         "AWS_ACCESS_KEY_ID",
         "PINECONE_API_KEY",

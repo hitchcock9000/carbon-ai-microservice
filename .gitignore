@@ -235,3 +235,11 @@ setup_security.sh
 # Ignore PDF files (keep only in local)
 *.pdf
 
+
+# Node.js
+node_modules/
+package-lock.json
+
+# Project planning documents (local only)
+PROJECT_PLAN.md
+PRODUCT_REQUIREMENTS.md
