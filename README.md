@@ -7,7 +7,7 @@
 [![Machine Learning](https://img.shields.io/badge/ML-LightGBM%20%7C%20LSTM-orange.svg)](https://github.com/hitchcock9000/carbon-ai-microservice)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-A production-ready machine learning microservice that predicts building energy consumption and carbon emissions. This project integrates with the [MyCarbonAI Dashboard](https://github.com/hitchcock9000/mycarbonai-dashboard) to provide real-time AI-powered sustainability insights for businesses.
+A production-ready machine learning microservice that predicts building energy consumption and carbon emissions. Built as an open-source tool to help organizations make data-driven sustainability decisions with AI-powered forecasting and insights.
 
 **Live Demo**: [View Presentation](./presentation-en.html) | **API Docs**: http://localhost:8000/docs
 
@@ -33,7 +33,7 @@ A production-ready machine learning microservice that predicts building energy c
 
 ## Overview
 
-The Carbon AI Microservice is the machine learning backend for MyCarbonAI, a comprehensive ESG (Environmental, Social, Governance) tracking platform. Built as part of my **Ironhack Data Analytics Bootcamp** final project, this microservice demonstrates advanced machine learning techniques applied to real-world sustainability challenges.
+The Carbon AI Microservice is an open-source machine learning platform for energy consumption prediction and carbon emissions forecasting. Built as part of my **Ironhack Data Analytics Bootcamp** final project, this microservice demonstrates advanced machine learning techniques applied to real-world sustainability challenges.
 
 ### The Problem
 
@@ -136,14 +136,14 @@ An AI-powered microservice that:
 
 ```
 ┌──────────────────────────────────────────────────────────────┐
-│                  MyCarbonAI Dashboard (Frontend)              │
-│              Express.js + React + Supabase Auth              │
+│                    Your Application                           │
+│              (Any Frontend/Dashboard/Client)                  │
 └────────────────────────┬─────────────────────────────────────┘
                          │ REST API (JSON)
-                         │ JWT Authentication
+                         │ HTTP/HTTPS
                          ▼
 ┌──────────────────────────────────────────────────────────────┐
-│              Carbon AI Microservice (Backend)                 │
+│              Carbon AI Microservice (FastAPI)                 │
 ├──────────────────────────────────────────────────────────────┤
 │  ┌──────────────┐  ┌──────────────┐  ┌──────────────────┐   │
 │  │   API Layer  │  │  ML Services │  │ Data Processing  │   │
@@ -166,7 +166,7 @@ An AI-powered microservice that:
 
 ### Data Flow
 
-1. **User Request** → Dashboard sends prediction request to API
+1. **User Request** → Client application sends prediction request to API
 2. **Validation** → Pydantic models validate input parameters
 3. **Feature Engineering** → Extract temporal features, normalize data
 4. **Model Inference** → LightGBM/LSTM generates predictions
@@ -527,9 +527,9 @@ This project was built over **6 weeks** as part of the Ironhack Data Analytics B
 - Added fallback logic for graceful degradation
 - Interactive Swagger documentation
 
-### Phase 5: Integration & Testing (Week 6)
+### Phase 5: API Development & Testing (Week 6)
 
-- Integrated with MyCarbonAI Express.js dashboard
+- Built RESTful API with FastAPI
 - Unit tests with pytest (85% coverage)
 - Performance testing (100+ req/sec)
 - Demo preparation and presentation materials
@@ -635,9 +635,56 @@ python test_server.py
 
 ---
 
+## Integration with Your Application
+
+This microservice is designed to be integrated with any frontend application or dashboard. Here's how to connect it:
+
+### Basic Integration
+
+1. **Start the microservice** on your server or localhost
+2. **Make HTTP requests** from your application to the API endpoints
+3. **Parse JSON responses** and display predictions in your UI
+
+### Example: JavaScript/React Integration
+
+```javascript
+async function getPrediction(buildingId, startDate, endDate) {
+  const response = await fetch('http://localhost:8000/api/forecast/future', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      building_id: buildingId,
+      start_date: startDate,
+      end_date: endDate,
+      temperature: 18.5,
+      occupancy_rate: 0.85
+    })
+  });
+
+  const data = await response.json();
+  return data;
+}
+```
+
+### CORS Configuration
+
+The API has CORS enabled by default. To configure allowed origins, update `src/api/main.py`:
+
+```python
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000", "https://yourdomain.com"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+```
+
+---
+
 ## Contributing
 
-This is a bootcamp final project, but suggestions and feedback are welcome!
+Contributions are welcome! This project is open source and I'm happy to review pull requests.
 
 ### How to Contribute
 
@@ -646,6 +693,14 @@ This is a bootcamp final project, but suggestions and feedback are welcome!
 3. Commit your changes (`git commit -m 'feat: add cool feature'`)
 4. Push to the branch (`git push origin feature/cool-idea`)
 5. Open a Pull Request
+
+### Contribution Ideas
+
+- Add new ML models (e.g., Transformer-based forecasting)
+- Improve API performance and caching
+- Add more comprehensive tests
+- Improve documentation
+- Fix bugs or security issues
 
 ### Commit Convention
 
@@ -683,8 +738,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **Portfolio**: [View more projects](https://github.com/hitchcock9000)
 
 **Project Links**
-- **Microservice Repository**: https://github.com/hitchcock9000/carbon-ai-microservice
-- **Dashboard Repository**: https://github.com/hitchcock9000/mycarbonai-dashboard
+- **Repository**: https://github.com/hitchcock9000/carbon-ai-microservice
 - **Issues & Bugs**: https://github.com/hitchcock9000/carbon-ai-microservice/issues
 - **Live Presentation**: [View Slides](./presentation-en.html)
 
