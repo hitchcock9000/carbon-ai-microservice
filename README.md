@@ -474,18 +474,14 @@ carbon-ai-microservice/
 ├── static/                           # Frontend files
 │   └── dashboard.html               # Standalone dashboard
 │
-├── docs/                             # Documentation
-│   ├── presentation-en.html         # Project presentation
-│   ├── PRESENTATION_NOTES_EN.md     # Presentation script
-│   └── presentation_backup.html     # Backup slides
-│
 ├── results/                          # Model outputs
 │   ├── feature_importance_future.png
 │   ├── forecast_24h.png
 │   └── model_evaluation_comprehensive.png
 │
+├── presentation-en.html              # Project presentation
 ├── requirements.txt                  # Python dependencies
-├── start-demo.sh                     # Demo startup script
+├── LICENSE                           # MIT License
 ├── .gitignore                        # Git ignore rules
 └── README.md                         # This file
 ```
