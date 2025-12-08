@@ -494,45 +494,47 @@ carbon-ai-microservice/
 
 ## Development Journey
 
-This project was built over **6 weeks** as part of the Ironhack Data Analytics Bootcamp. Here's the journey:
+This project was executed over **7 intensive days** as part of the Ironhack Data Analytics Bootcamp final project, leveraging prior research and domain knowledge acquired throughout the bootcamp.
 
-### Phase 1: Data Exploration (Week 1)
+### Pre-Development Phase (Bootcamp Duration)
+
+- Research on energy forecasting and ML techniques
+- Study of time-series models and gradient boosting algorithms
+- Understanding of sustainability metrics and carbon emissions
+- Familiarity with ASHRAE datasets and building energy systems
+
+### Day 1-2: Data Exploration & Preprocessing
 
 - Analyzed ASHRAE Great Energy Predictor III dataset (1.4 GB, 20M rows)
-- Identified key features: temperature, building metadata, temporal patterns
-- Created visualizations for energy consumption patterns
-- Notebook: `01_eda/exploratory_analysis.ipynb`
-
-### Phase 2: Data Preprocessing (Week 2)
-
 - Feature engineering: created 15+ temporal and statistical features
-- Handled missing values (forward fill for time-series continuity)
-- Normalized numerical features (StandardScaler)
+- Handled missing values and normalized numerical features
 - Train/validation/test split (60/20/20)
-- Notebook: `02_preprocessing/data_preprocessing.ipynb`
+- Notebooks: `01_eda/exploratory_analysis.ipynb`, `02_preprocessing/data_preprocessing.ipynb`
 
-### Phase 3: Model Development (Weeks 3-4)
+### Day 3-4: Model Development
 
 - **Baseline models**: Linear Regression, Random Forest (R² ~ 0.6-0.7)
 - **Advanced models**: XGBoost, LightGBM (R² ~ 0.8-0.9)
 - **Deep learning**: LSTM time-series model (R² ~ 0.85)
 - Hyperparameter tuning with Grid Search
+- Model evaluation and selection
 - Notebooks: `03_modeling/advanced_models.ipynb`, `lstm_forecasting.ipynb`
 
-### Phase 4: API Development (Week 5)
+### Day 5-6: API Development
 
 - Built FastAPI microservice with async support
 - Created 5 core endpoints with Pydantic validation
-- Implemented CORS for dashboard integration
+- Implemented CORS for frontend integration
 - Added fallback logic for graceful degradation
 - Interactive Swagger documentation
-
-### Phase 5: API Development & Testing (Week 6)
-
-- Built RESTful API with FastAPI
 - Unit tests with pytest (85% coverage)
+
+### Day 7: Testing & Presentation
+
 - Performance testing (100+ req/sec)
-- Demo preparation and presentation materials
+- Bug fixes and optimizations
+- Documentation and presentation materials
+- Final demo preparation
 
 ### Challenges Overcome
 
