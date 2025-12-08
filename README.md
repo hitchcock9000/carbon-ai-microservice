@@ -732,7 +732,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 **Nim Silvestre**
 - **GitHub**: [@hitchcock9000](https://github.com/hitchcock9000)
 - **Email**: hitchcock9000@gmail.com
-- **LinkedIn**: [Connect with me](https://linkedin.com/in/yourprofile) *(update with your profile)*
+- **LinkedIn**: [linkedin.com/in/natashasilvestre](https://linkedin.com/in/natashasilvestre)
 - **Portfolio**: [View more projects](https://github.com/hitchcock9000)
 
 **Project Links**
@@ -752,7 +752,7 @@ If you found this project helpful or interesting:
 
 ---
 
-**Built with passion for sustainability and machine learning | Ironhack Data Analytics Bootcamp 2024-2025**
+**Built with passion for sustainability and machine learning | Ironhack Data Analytics Bootcamp Nov-Dec 2024**
 
 ---
 
