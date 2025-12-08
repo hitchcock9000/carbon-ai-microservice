@@ -11,7 +11,7 @@ from datetime import datetime
 class EnergyPredictionRequest(BaseModel):
     """Request model for energy consumption prediction"""
     building_id: int = Field(..., description="Building identifier")
-    square_feet: float = Field(..., gt=0, description="Building area in square feet")
+    square_meters: float = Field(..., gt=0, description="Building area in square meters")
     primary_use: int = Field(..., ge=0, description="Primary use category (encoded)")
     year_built: Optional[float] = Field(None, description="Year building was constructed")
     floor_count: Optional[float] = Field(None, ge=0, description="Number of floors")
@@ -27,7 +27,7 @@ class EnergyPredictionRequest(BaseModel):
         json_schema_extra = {
             "example": {
                 "building_id": 100,
-                "square_feet": 50000,
+                "square_meters": 4645,
                 "primary_use": 0,
                 "year_built": 2000,
                 "floor_count": 5,
@@ -120,7 +120,7 @@ class InsightsRequest(BaseModel):
                     {"date": "2024-02", "amount": 1600, "category": "energy"}
                 ],
                 "building_info": {
-                    "square_feet": 50000,
+                    "square_meters": 4645,
                     "type": "office"
                 }
             }
