@@ -1,13 +1,13 @@
-# Carbon AI Microservice
+# Carbon ML Microservice
 
-> AI-powered energy consumption prediction and carbon emissions forecasting system built with FastAPI, LightGBM, and LSTM neural networks.
+> Machine learning microservice for energy consumption prediction and carbon emissions forecasting, built with FastAPI, LightGBM, and LSTM neural networks.
 
 [![Python](https://img.shields.io/badge/Python-3.12+-blue.svg)](https://www.python.org/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.100+-green.svg)](https://fastapi.tiangolo.com/)
 [![Machine Learning](https://img.shields.io/badge/ML-LightGBM%20%7C%20LSTM-orange.svg)](https://github.com/hitchcock9000/carbon-ai-microservice)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-A production-ready machine learning microservice that predicts building energy consumption and carbon emissions. Built as an open-source tool to help organizations make data-driven sustainability decisions with AI-powered forecasting and insights.
+A production-ready machine learning microservice that predicts building energy consumption and carbon emissions. Built as an open-source tool to help organizations make data-driven sustainability decisions with advanced forecasting and insights.
 
 **Live Demo**: [View Presentation](./presentation-en.html) | **API Docs**: http://localhost:8000/docs
 
@@ -62,7 +62,7 @@ An AI-powered microservice that:
 
 ## Key Features
 
-### 🤖 AI-Powered Predictions
+### 🤖 ML-Powered Predictions
 
 - **Future Energy Forecasting** - LightGBM gradient boosting model predicts energy consumption 1-168 hours ahead
 - **Time-Series Analysis** - LSTM neural networks for sequential pattern recognition
@@ -78,8 +78,8 @@ An AI-powered microservice that:
 
 ### 📊 Advanced Analytics
 
-- **Building Health Scoring** - AI-powered efficiency ratings (0-100 scale)
-- **Anomaly Detection** - Automatic identification of unusual energy patterns
+- **Building Health Scoring** - Efficiency ratings (0-100 scale)
+- **Anomaly Detection** - Identification of unusual energy patterns
 - **Comparative Analysis** - Multi-building portfolio benchmarking
 - **Feature Importance** - Transparent ML model explanations
 
@@ -752,7 +752,7 @@ If you found this project helpful or interesting:
 
 ---
 
-**Built with passion for sustainability and machine learning | Ironhack Data Analytics Bootcamp Nov-Dec 2024**
+**Built for sustainability and machine learning | Ironhack Data Analytics Bootcamp Nov-Dec 2024**
 
 ---
 

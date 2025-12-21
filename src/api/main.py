@@ -21,7 +21,7 @@ from src.api.static_files import router as static_router
 app = FastAPI(
     title="Carbon Footprint AI Microservice",
     description="AI-powered carbon emissions prediction and sustainability optimization",
-    version="1.0.0",
+    version="1.1.0",
     docs_url="/docs",
     redoc_url="/redoc"
 )
@@ -45,7 +45,7 @@ async def root():
     """Root endpoint - API information"""
     return {
         "message": "Carbon Footprint AI Microservice",
-        "version": "1.0.0",
+        "version": "1.1.0",
         "status": "operational",
         "timestamp": datetime.utcnow().isoformat(),
         "docs": "/docs",
