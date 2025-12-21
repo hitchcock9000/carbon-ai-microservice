@@ -9,4 +9,6 @@ joblib
 requests
 httpx
 aiofiles
+openai
+slowapi
 # Removed heavy ML libs (tensorflow, prophet, etc) for Serverless size limits
