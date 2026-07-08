@@ -62,28 +62,28 @@ An AI-powered microservice that:
 
 ## Key Features
 
-### 🤖 ML-Powered Predictions
+### ML-Powered Predictions
 
 - **Future Energy Forecasting** - LightGBM gradient boosting model predicts energy consumption 1-168 hours ahead
 - **Time-Series Analysis** - LSTM neural networks for sequential pattern recognition
 - **Carbon Emissions Calculation** - Real-time CO₂ emissions based on energy predictions
 - **Scenario Modeling** - "What-if" analysis for efficiency improvements
 
-### 🔧 Production-Ready API
+### Production-Ready API
 
 - **FastAPI Framework** - High-performance async REST API with automatic OpenAPI documentation
 - **CORS Support** - Seamless integration with frontend dashboards
 - **Error Handling** - Comprehensive validation and error messages
 - **Fallback Logic** - Graceful degradation when models unavailable
 
-### 📊 Advanced Analytics
+### Advanced Analytics
 
 - **Building Health Scoring** - Efficiency ratings (0-100 scale)
 - **Anomaly Detection** - Identification of unusual energy patterns
 - **Comparative Analysis** - Multi-building portfolio benchmarking
 - **Feature Importance** - Transparent ML model explanations
 
-### 🚀 Developer Experience
+### Developer Experience
 
 - **Interactive Swagger Docs** - Test endpoints directly in browser
 - **Jupyter Notebooks** - Complete ML workflow from EDA to deployment
@@ -745,10 +745,10 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## Support This Project
 
 If you found this project helpful or interesting:
-- ⭐ Star the repository
-- 🍴 Fork it for your own experiments
-- 📣 Share it with others interested in ML + sustainability
-- 💬 Open an issue with feedback or questions
+- Star the repository
+- Fork it for your own experiments
+- Share it with others interested in ML + sustainability
+- Open an issue with feedback or questions
 
 ---
 
@@ -780,4 +780,4 @@ pytest tests/ -v
 
 ---
 
-**Ready to predict the future of energy consumption? Let's build a sustainable tomorrow! 🌱**
+**Ready to predict the future of energy consumption? Let's build a sustainable tomorrow!**
