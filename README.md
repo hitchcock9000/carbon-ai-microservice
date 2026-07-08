@@ -33,7 +33,7 @@ A production-ready machine learning microservice that predicts building energy c
 
 ## Overview
 
-The Carbon AI Microservice is an open-source machine learning platform for energy consumption prediction and carbon emissions forecasting. Built as part of my **Ironhack Data Analytics Bootcamp** final project, this microservice demonstrates advanced machine learning techniques applied to real-world sustainability challenges.
+The Carbon AI Microservice is an open-source machine learning platform for energy consumption prediction and carbon emissions forecasting. This microservice demonstrates advanced machine learning techniques applied to real-world sustainability challenges.
 
 ### The Problem
 
